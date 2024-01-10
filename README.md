@@ -15,7 +15,7 @@ import (
 	"github.com/EliCDavis/sfm/meshroom"
 )
 
-func TestLoad(t *testing.T) {
+func main() {
 	cameras, err := meshroom.LoadCameras("MeshroomProject/MeshroomCache/StructureFromMotion/abc123/cameras.sfm")
 
 	if err != nil {
@@ -39,7 +39,7 @@ import (
 	"github.com/EliCDavis/sfm/opensfm"
 )
 
-func TestLoad(t *testing.T) {
+func main() {
 	reconstructions, err := opensfm.LoadReconstruction("MyOpenSFMProject/reconstruction.json")
 
 	if err != nil {
