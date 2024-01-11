@@ -4,8 +4,9 @@ Structs for interacting with reconstruction data from different SFM programs
 
 ## COLMAP
 
-Interact with COLMAPS's `points3D.bin` file output under the sparse reconstruction data.
+### Point Data
 
+Interact with COLMAPS's `points3D.bin` file output under the sparse reconstruction data.
 
 ```golang
 package example
@@ -17,14 +18,36 @@ import (
 )
 
 func main() {
-	points, err := colmap.ReadPoints3D("ColmapProject/sparse/0/points3D.bin")
-
+	points, err := colmap.ReadPoints3DBinary("ColmapProject/sparse/0/points3D.bin")
 	if err != nil {
 		panic(err)
 	}
 
-
 	fmt.Printf("File contains %d points", len(points))
+}
+
+```
+
+### Cameras
+
+Interact with COLMAPS's `cameras.bin` file output under the sparse reconstruction data.
+
+```golang
+package example
+
+import (
+	"fmt"
+
+	"github.com/EliCDavis/sfm/colmap"
+)
+
+func main() {
+	cameras, err := colmap.ReadCamerasBinary("ColmapProject/sparse/0/cameras.bin")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("File contains %d cameras", len(cameras))
 }
 
 ```
@@ -44,7 +67,6 @@ import (
 
 func main() {
 	cameras, err := meshroom.LoadCameras("MeshroomProject/MeshroomCache/StructureFromMotion/abc123/cameras.sfm")
-
 	if err != nil {
 		panic(err)
 	}
@@ -68,7 +90,6 @@ import (
 
 func main() {
 	reconstructions, err := opensfm.LoadReconstruction("MyOpenSFMProject/reconstruction.json")
-
 	if err != nil {
 		panic(err)
 	}
