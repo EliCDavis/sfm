@@ -1,6 +1,10 @@
 package opensfm
 
-import "github.com/EliCDavis/sfm"
+import (
+	"io"
+
+	"github.com/EliCDavis/sfm"
+)
 
 // ReconstructionJson represents the reconstruction.json output by OpenSFM
 type ReconstructionJsonSchema []ReconstructionSchema
@@ -59,6 +63,10 @@ type ReferenceLLA struct {
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 	Altitude  float64 `json:"altitude"`
+}
+
+func ReadReconstruction(in io.Reader) (ReconstructionJsonSchema, error) {
+	return sfm.ReadJSON[ReconstructionJsonSchema](in)
 }
 
 func LoadReconstruction(filename string) (ReconstructionJsonSchema, error) {

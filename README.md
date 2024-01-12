@@ -2,6 +2,14 @@
 
 Structs for interacting with reconstruction data from different SFM programs
 
+* COLMAP
+	* Cameras
+	* Points
+* OpenSFM
+	* reconstruction.json
+* Meshroom
+	* cameras.sfm
+
 ## COLMAP
 
 ### Point Data
@@ -18,7 +26,7 @@ import (
 )
 
 func main() {
-	points, err := colmap.ReadPoints3DBinary("ColmapProject/sparse/0/points3D.bin")
+	points, err := colmap.LoadPoints3DBinary("ColmapProject/sparse/0/points3D.bin")
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +50,7 @@ import (
 )
 
 func main() {
-	cameras, err := colmap.ReadCamerasBinary("ColmapProject/sparse/0/cameras.bin")
+	cameras, err := colmap.LoadCamerasBinary("ColmapProject/sparse/0/cameras.bin")
 	if err != nil {
 		panic(err)
 	}

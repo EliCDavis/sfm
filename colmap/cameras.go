@@ -1,8 +1,10 @@
 package colmap
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/EliCDavis/bitlib"
@@ -70,14 +72,8 @@ type Camera struct {
 	Params []float64
 }
 
-func ReadCamerasBinary(filename string) ([]Camera, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	reader := bitlib.NewReader(f, binary.LittleEndian)
+func ReadCamerasBinary(in io.Reader) ([]Camera, error) {
+	reader := bitlib.NewReader(in, binary.LittleEndian)
 
 	numCameras := reader.UInt64()
 	cameras := make([]Camera, numCameras)
@@ -100,4 +96,14 @@ func ReadCamerasBinary(filename string) ([]Camera, error) {
 	}
 
 	return cameras, reader.Error()
+}
+
+func LoadCamerasBinary(filename string) ([]Camera, error) {
+	f, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	return ReadCamerasBinary(bufio.NewReader(f))
 }

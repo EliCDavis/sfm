@@ -1,8 +1,10 @@
 package colmap
 
 import (
+	"bufio"
 	"encoding/binary"
 	"image/color"
+	"io"
 	"os"
 
 	"github.com/EliCDavis/bitlib"
@@ -26,14 +28,8 @@ type Point3D struct {
 	Tracks   []Point3DTrack // as (IMAGE_ID, POINT2D_IDX)
 }
 
-func ReadPoints3DBinary(filename string) ([]Point3D, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	reader := bitlib.NewReader(f, binary.LittleEndian)
+func ReadPoints3DBinary(in io.Reader) ([]Point3D, error) {
+	reader := bitlib.NewReader(in, binary.LittleEndian)
 
 	numPoints := reader.UInt64()
 	points := make([]Point3D, numPoints)
@@ -70,4 +66,14 @@ func ReadPoints3DBinary(filename string) ([]Point3D, error) {
 	}
 
 	return points, reader.Error()
+}
+
+func LoadPoints3DBinary(filename string) ([]Point3D, error) {
+	f, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	return ReadPoints3DBinary(bufio.NewReader(f))
 }

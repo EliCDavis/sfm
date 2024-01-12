@@ -1,6 +1,10 @@
 package meshroom
 
-import "github.com/EliCDavis/sfm"
+import (
+	"io"
+
+	"github.com/EliCDavis/sfm"
+)
 
 type Version []string
 
@@ -60,6 +64,10 @@ type Cameras struct {
 	Views           []View      `json:"views"`
 	Intrinsics      []Intrinsic `json:"intrinsics"`
 	Poses           []Pose      `json:"poses"`
+}
+
+func ReadCameras(in io.Reader) (Cameras, error) {
+	return sfm.ReadJSON[Cameras](in)
 }
 
 func LoadCameras(filename string) (Cameras, error) {
