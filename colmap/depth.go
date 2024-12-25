@@ -1,6 +1,7 @@
 package colmap
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -89,5 +90,5 @@ func LoadDepthmap(file string) (*Depthmap, error) {
 	}
 	defer f.Close()
 
-	return ReadDepthmap(f)
+	return ReadDepthmap(bufio.NewReader(f))
 }

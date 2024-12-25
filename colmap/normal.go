@@ -1,6 +1,7 @@
 package colmap
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -95,5 +96,5 @@ func LoadNormalmap(file string) (*Normalmap, error) {
 	}
 	defer f.Close()
 
-	return ReadNormalmap(f)
+	return ReadNormalmap(bufio.NewReader(f))
 }
