@@ -5,6 +5,7 @@ Structs for interacting with reconstruction data from different SFM programs
 * COLMAP
 	* Cameras
 	* Points
+	* Images
 	* Depthmap
 	* Normalmap
 * OpenSFM
@@ -35,7 +36,6 @@ func main() {
 
 	fmt.Printf("File contains %d points", len(points))
 }
-
 ```
 
 ### Cameras
@@ -59,7 +59,29 @@ func main() {
 
 	fmt.Printf("File contains %d cameras", len(cameras))
 }
+```
 
+### Images
+
+Interact with COLMAPS's `images.bin` file output under the sparse reconstruction data.
+
+```golang
+package example
+
+import (
+	"fmt"
+
+	"github.com/EliCDavis/sfm/colmap"
+)
+
+func main() {
+	images, err := colmap.LoadImagesBinary("ColmapProject/sparse/0/images.bin")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("File contains %d images", len(images))
+}
 ```
 
 ### Depth maps
