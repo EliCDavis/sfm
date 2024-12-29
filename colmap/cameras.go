@@ -64,6 +64,44 @@ func (cm CameraModel) NumParameters() int {
 	panic(fmt.Errorf("unimplemented Camera Model Parameter Count %d", cm))
 }
 
+func (cm CameraModel) String() string {
+	switch cm {
+	case SIMPLE_PINHOLE:
+		return "Simple Pinhole"
+
+	case PINHOLE:
+		return "Pinhole"
+
+	case SIMPLE_RADIAL:
+		return "Simple Radial"
+
+	case RADIAL:
+		return "Radial"
+
+	case OPENCV:
+		return "OpenCV"
+
+	case OPENCV_FISHEYE:
+		return "OpenCV Fisheye"
+
+	case FULL_OPENCV:
+		return "Full OpenCV"
+
+	case FOV:
+		return "FOV"
+
+	case SIMPLE_RADIAL_FISHEYE:
+		return "Simple Radial Fisheye"
+
+	case RADIAL_FISHEYE:
+		return "Radial Fisheye"
+
+	case THIN_PRISM_FISHEYE:
+		return "Thin Prism Fisheye"
+	}
+	panic(fmt.Errorf("unimplemented Camera Model Parameter Count %d", cm))
+}
+
 type Camera struct {
 	ID     int
 	Model  CameraModel
